@@ -1,4 +1,7 @@
+package rw;
+
 import java.io.*;
+import family.FamilyTree;
 
 public class FileHandler implements Writer {
     ObjectOutputStream objectOutputStream;

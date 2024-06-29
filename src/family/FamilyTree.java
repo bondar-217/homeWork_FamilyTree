@@ -1,6 +1,10 @@
+package family;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import family.Gender;
+
 
 public class FamilyTree implements Serializable {
     private Set<Human> humans;

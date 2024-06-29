@@ -1,9 +1,12 @@
-import java.io.IOException;
+import rw.FileHandler;
+import rw.Writer;
+import family.FamilyTree;
+import family.Human;
+import family.Gender;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {

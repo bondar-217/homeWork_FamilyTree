@@ -1,4 +1,7 @@
+package rw;
+
 import java.io.IOException;
+import family.FamilyTree;
 
 public interface Writer {
     FamilyTree read(String path) throws IOException, ClassNotFoundException;
