@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Human implements Serializable {
+    private int id;
     private final String name;
     private final LocalDate birthDate;
     private LocalDate deathDate;
@@ -15,14 +16,15 @@ public class Human implements Serializable {
     private Human mother, father;
     private Set<Human> children;
 
-    public Human(String name, LocalDate birthDate, Gender gender, Human mother, Human father){
-        this(name, birthDate, gender);
+    public Human(int id, String name, LocalDate birthDate, Gender gender, Human mother, Human father){
+        this(id, name, birthDate, gender);
         setParents(mother);
         setParents(father);
     }
 
     // Этот конструктор для корневых элементов дерева, для которых не указываются родители
-    public Human(String name, LocalDate birthDate, Gender gender){
+    public Human(int id, String name, LocalDate birthDate, Gender gender){
+        this.id = id;
         children = new HashSet<>();
         this.name = name;
         this.birthDate = birthDate;
@@ -36,6 +38,10 @@ public class Human implements Serializable {
         if (father != null)
             set.add(father);
         return set;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName(){
@@ -103,7 +109,7 @@ public class Human implements Serializable {
 
     @Override
     public String toString() {
-        return name + " " + getAge() + " y.o. " + gender.toString();
+        return "#" + id + ": " + name + " " + getAge() + " y.o. " + gender.toString();
 
     }
 
@@ -117,7 +123,7 @@ public class Human implements Serializable {
         Human human = (Human) obj;
         if (this.hashCode() != human.hashCode())
             return false;
-        return this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
+        return this.id == human.id && this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
                 && this.children.equals(human.children);
     }
 
@@ -129,7 +135,7 @@ public class Human implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, birthDate, mother, father, this.setSize());
+        return Objects.hash(id, name, birthDate, mother, father, this.setSize());
     }
 
     // Поиск предков и потомков в n-ном поколении перенесены в FamilyTree

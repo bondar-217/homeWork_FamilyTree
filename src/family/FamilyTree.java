@@ -51,6 +51,15 @@ public class FamilyTree implements Serializable {
         return null;
     }
 
+    public Human getById(int id){
+        for (Human human : humans){
+            if (human.getId() == id){
+                return human;
+            }
+        }
+        return null;
+    }
+
     public Set<Human> getSiblings(Human human) {
         Set<Human> siblings = new HashSet<>();
         for (Human parent : human.getParents()) {
