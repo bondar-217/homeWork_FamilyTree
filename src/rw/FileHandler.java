@@ -1,7 +1,7 @@
 package rw;
 
 import java.io.*;
-import family.FamilyTree;
+import family.tree.FamilyTree;
 
 public class FileHandler implements Writer {
     ObjectOutputStream objectOutputStream;
@@ -12,9 +12,6 @@ public class FileHandler implements Writer {
         objectOutputStream = new ObjectOutputStream(
                 new FileOutputStream(filename));
         objectOutputStream.writeObject(tree);
-        for (Serializable human : tree.getTree()){
-            objectOutputStream.writeObject(human);
-        }
         objectOutputStream.close();
     }
 

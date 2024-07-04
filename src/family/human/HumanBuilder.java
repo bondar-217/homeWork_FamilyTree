@@ -1,4 +1,4 @@
-package family;
+package family.human;
 
 import java.time.LocalDate;
 

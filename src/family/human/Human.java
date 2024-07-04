@@ -1,4 +1,7 @@
-package family;
+package family.human;
+
+//TODO
+// Exceptions
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +10,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private int id;
     private final String name;
     private final LocalDate birthDate;
@@ -18,8 +21,8 @@ public class Human implements Serializable {
 
     public Human(int id, String name, LocalDate birthDate, Gender gender, Human mother, Human father){
         this(id, name, birthDate, gender);
-        setParents(mother);
-        setParents(father);
+        setParent(mother);
+        setParent(father);
     }
 
     // Этот конструктор для корневых элементов дерева, для которых не указываются родители
@@ -88,7 +91,7 @@ public class Human implements Serializable {
     // на случай, если родители не были указаны в конструкторе.
     // может также понадобиться при продлении дерева вверх
     // исправлено
-    public void setParents(Human parent){
+    public void setParent(Human parent){
         if (parent.gender == Gender.Female)
             this.mother = parent;
         else this.father = parent;
@@ -99,8 +102,12 @@ public class Human implements Serializable {
         this.deathDate = deathDate;
     }
 
-    public void addChild(Human child){
-        children.add(child);
+    public boolean addChild(Human child){
+        return children.add(child);
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public Set<Human> getChildren(){
@@ -136,6 +143,11 @@ public class Human implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, birthDate, mother, father, this.setSize());
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.id - o.getId();
     }
 
     // Поиск предков и потомков в n-ном поколении перенесены в FamilyTree

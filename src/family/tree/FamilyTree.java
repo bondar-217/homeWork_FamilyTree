@@ -1,38 +1,42 @@
-package family;
+package family.tree;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import family.Gender;
+import java.util.*;
+
+import family.human.Human;
+import family.human.HumansIterator;
 
 
-public class FamilyTree implements Serializable {
-    private Set<Human> humans;
+public class FamilyTree implements Serializable, Iterable<Human> {
+    private List<Human> humans;
 
-    public FamilyTree(Set<Human> set){
-        humans = new HashSet<>(set);
+    public FamilyTree(List<Human> list){
+        humans = new ArrayList<>(list);
     }
 
     public FamilyTree() {
-        humans = new HashSet<>();
+        humans = new ArrayList<>();
     }
 
-    public void add(Human human) {
-        humans.add(human);
+    public boolean add(Human human) {
+        if (!humans.contains(human))
+            return humans.add(human);
+        return false;
     }
 
-    public Set<Human> getTree() {
+    private List<Human> getTree() {
         return humans;
     }
 
-    public void setParentRelationship(Human human) {
+    public boolean setParentRelationship(Human human) {
         if (!human.getParents().isEmpty()) {
             for (Human parent : human.getParents()) {
                 if (!parent.getChildren().contains(human)) {
-                    parent.addChild(human);
+                    return parent.addChild(human);
                 }
             }
         }
+        return false;
     }
 
     //
@@ -97,5 +101,21 @@ public class FamilyTree implements Serializable {
             }
         }
         return hs;
+    }
+
+    public void sortById(){
+        humans.sort(null);
+    }
+
+    public void sortByName(){
+        humans.sort(new ByNameComparator());
+    }
+
+    public void sortByAge(){
+        humans.sort(new ByAgeComparator());
+    }
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumansIterator(humans);
     }
 }
