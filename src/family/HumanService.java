@@ -9,20 +9,16 @@ import rw.Writer;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-public class Service {
-    private FamilyTree tree;
+public class HumanService {
+    private FamilyTree<Human> tree;
     private HumanBuilder builder;
     private Writer rw;
     private String path;
 
-
-
-    public Service(){
-        tree = new FamilyTree();
+    public HumanService(){
+        tree = new FamilyTree<>();
         builder = new HumanBuilder();
         rw = new FileHandler();
         path = "tree.out";
@@ -39,7 +35,7 @@ public class Service {
 
     // TREE
     public boolean addHumanToTree(String name, LocalDate birthDate, Gender gender){
-        Human human = builder.createHuman(name, birthDate, gender);
+        Human human = builder.create(name, birthDate, gender);
         return tree.add(human);
     }
 

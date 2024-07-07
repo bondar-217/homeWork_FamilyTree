@@ -1,14 +1,16 @@
 package family.human;
 
+import family.Alivable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class HumansIterator implements Iterator<Human> {
-    private List<Human> list;
+public class HumansIterator<T extends Alivable<T>> implements Iterator<T> {
+    private List<T> list;
     private int index;
-    public HumansIterator(List<Human> list){
+    public HumansIterator(List<T> list){
         this.list = list;
     }
 
@@ -18,7 +20,7 @@ public class HumansIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return list.get(index++);
     }
 }

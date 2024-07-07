@@ -3,6 +3,8 @@ package family.human;
 //TODO
 // Exceptions
 
+import family.Alivable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -10,12 +12,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
     private int id;
-    private final String name;
-    private final LocalDate birthDate;
+    private String name;
+    private LocalDate birthDate;
     private LocalDate deathDate;
-    private final Gender gender;
+    private Gender gender;
     private Human mother, father;
     private Set<Human> children;
 
@@ -37,9 +39,9 @@ public class Human implements Serializable, Comparable<Human> {
     public HashSet<Human> getParents(){
         HashSet<Human> set = new HashSet<>();
         if (mother != null)
-            set.add(mother);
+            set.add( mother);
         if (father != null)
-            set.add(father);
+            set.add( father);
         return set;
     }
 
@@ -66,7 +68,7 @@ public class Human implements Serializable, Comparable<Human> {
 
     public Human getMother(){
         if (mother != null)
-            return mother;
+            return (Human) mother;
         return null;
     }
 
@@ -82,7 +84,7 @@ public class Human implements Serializable, Comparable<Human> {
     public Human getChildByName(String name){
         for (Human child : children){
             if(child.getName().equals(name)){
-                return child;
+                return (Human) child;
             }
         }
         return null;
@@ -130,8 +132,9 @@ public class Human implements Serializable, Comparable<Human> {
         Human human = (Human) obj;
         if (this.hashCode() != human.hashCode())
             return false;
-        return this.id == human.id && this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
+      return this.id == human.id && this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
                 && this.children.equals(human.children);
+//        return this.id == human.id;
     }
 
     private int setSize(){

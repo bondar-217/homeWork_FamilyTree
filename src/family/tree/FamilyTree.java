@@ -3,36 +3,37 @@ package family.tree;
 import java.io.Serializable;
 import java.util.*;
 
+import family.Alivable;
 import family.human.Human;
 import family.human.HumansIterator;
 
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> humans;
+public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable<U> {
+    private List<U> tree;
 
-    public FamilyTree(List<Human> list){
-        humans = new ArrayList<>(list);
+    public FamilyTree(List<U> list){
+        tree = new ArrayList<>(list);
     }
 
     public FamilyTree() {
-        humans = new ArrayList<>();
+        tree = new ArrayList<>();
     }
 
-    public boolean add(Human human) {
-        if (!humans.contains(human))
-            return humans.add(human);
+    public boolean add(U alivable) {
+        if (!tree.contains(alivable))
+            return tree.add(alivable);
         return false;
     }
 
-    private List<Human> getTree() {
-        return humans;
+    private List<U> getTree() {
+        return tree;
     }
 
-    public boolean setParentRelationship(Human human) {
-        if (!human.getParents().isEmpty()) {
-            for (Human parent : human.getParents()) {
-                if (!parent.getChildren().contains(human)) {
-                    return parent.addChild(human);
+    public boolean setParentRelationship(U alivable) {
+        if (!alivable.getParents().isEmpty()) {
+            for (U parent : alivable.getParents()) {
+                if (!parent.getChildren().contains(alivable)) {
+                    return parent.addChild(alivable);
                 }
             }
         }
@@ -41,34 +42,34 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     //
     public void setAllRelationships(){
-        for (Human human : humans){
-            setParentRelationship(human);
+        for (U alivable : tree){
+            setParentRelationship(alivable);
         }
     }
 
-    public Human getByName(String name){
-        for (Human human : humans){
-            if (human.getName().equals(name)){
-                return human;
+    public U getByName(String name){
+        for (U alivable : tree){
+            if (alivable.getName().equals(name)){
+                return alivable;
             }
         }
         return null;
     }
 
-    public Human getById(int id){
-        for (Human human : humans){
-            if (human.getId() == id){
-                return human;
+    public U getById(int id){
+        for (U alivable : tree){
+            if (alivable.getId() == id){
+                return alivable;
             }
         }
         return null;
     }
 
-    public Set<Human> getSiblings(Human human) {
-        Set<Human> siblings = new HashSet<>();
-        for (Human parent : human.getParents()) {
-            for (Human el : parent.getChildren()) {
-                if (!el.equals(human)) {
+    public Set<U> getSiblings(U alivable) {
+        Set<U> siblings = new HashSet<>();
+        for (U parent : alivable.getParents()) {
+            for (U el : parent.getChildren()) {
+                if (!el.equals(alivable)) {
                     siblings.add(el);
                 }
             }
@@ -76,26 +77,26 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return siblings;
     }
 
-    public HashSet<Human> getDescendants(Human human, int generation) {
-        HashSet<Human> hs = new HashSet<>();
+    public HashSet<U> getDescendants(U alivable, int generation) {
+        HashSet<U> hs = new HashSet<>();
         if (generation == 0) {
-            hs.addAll(this.getSiblings(human));
-            hs.add(human);
+            hs.addAll(this.getSiblings(alivable));
+            hs.add(alivable);
         }
-        for (Human child : human.getChildren()) {
+        for (U child : alivable.getChildren()) {
             hs.addAll(getDescendants(child, generation - 1));
         }
         return hs;
     }
 
-    public HashSet<Human> getAncestors(Human human, int generation){
-        HashSet<Human> hs = new HashSet<>();
+    public HashSet<U> getAncestors(U alivable, int generation){
+        HashSet<U> hs = new HashSet<>();
         if (generation == 0){
-            if (human != null){
-                hs.add(human);
+            if (alivable != null){
+                hs.add(alivable);
             }
         }
-        for (Human parent : human.getParents()){
+        for (U parent : alivable.getParents()){
             if (parent != null){
                 hs.addAll(getAncestors(parent, generation - 1));
             }
@@ -104,18 +105,18 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     public void sortById(){
-        humans.sort(null);
+        tree.sort(null);
     }
 
     public void sortByName(){
-        humans.sort(new ByNameComparator());
+        tree.sort(new ByNameComparator());
     }
 
     public void sortByAge(){
-        humans.sort(new ByAgeComparator());
+        tree.sort(new ByAgeComparator());
     }
     @Override
-    public Iterator<Human> iterator() {
-        return new HumansIterator(humans);
+    public Iterator<U> iterator() {
+        return new HumansIterator(tree);
     }
 }
