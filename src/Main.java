@@ -11,21 +11,14 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         HumanService humanService = new HumanService();
 
-        humanService.addHumanToTree("Eva", LocalDate.of(1987, Month.NOVEMBER, 10), Gender.Female);
-        humanService.addHumanToTree("Adam", LocalDate.of(1986, Month.APRIL, 26), Gender.Male);
-        humanService.addHumanToTree("Kain", LocalDate.of(2004, Month.JANUARY, 11), Gender.Male);
-        humanService.addHumanToTree("Sif", LocalDate.of(2010, Month.APRIL, 1), Gender.Male);
-        humanService.addHumanToTree("Avel", LocalDate.of(2000, Month.JUNE, 6), Gender.Male);
-        humanService.addHumanToTree("Avan", LocalDate.of(2005, Month.JULY, 16), Gender.Female);
-        humanService.addHumanToTree("Enoh", LocalDate.of(2020, Month.DECEMBER, 3), Gender.Male);
+        humanService.addHumanToTree("Anna", LocalDate.of(2021, Month.MARCH, 3), Gender.Female);
+        humanService.addHumanToTree("Egor", LocalDate.of(2000, Month.JANUARY, 25), Gender.Male);
+        humanService.addHumanToTree("Kirill", LocalDate.of(1999, Month.DECEMBER, 31), Gender.Male);
+        humanService.addHumanToTree("Alex", LocalDate.of(2011, Month.MAY, 11), Gender.Male);
+        humanService.addHumanToTree("Paul", LocalDate.of(2005, Month.JUNE, 6), Gender.Male);
+        humanService.addHumanToTree("Max", LocalDate.of(2002, Month.JULY, 16), Gender.Female);
+        humanService.addHumanToTree("Li", LocalDate.of(2004, Month.DECEMBER, 3), Gender.Male);
 
-//        Human eva = builder.createHuman("Eva", LocalDate.of(1987, Month.NOVEMBER, 10), Gender.Female);
-//        Human adam = builder.createHuman("Adam", LocalDate.of(1986, Month.APRIL, 26), Gender.Male);
-//        Human kain = builder.createHuman("Kain", LocalDate.of(2004, Month.JANUARY, 11), Gender.Male, eva, adam);
-//        Human sif = builder.createHuman("Sif", LocalDate.of(2010, Month.APRIL, 1), Gender.Male, eva, adam);
-//        Human avel = builder.createHuman("Avel", LocalDate.of(2000, Month.JUNE, 6), Gender.Male, eva, adam);
-//        Human avan = builder.createHuman("Avan", LocalDate.of(2005, Month.JULY, 16), Gender.Female, eva, adam);
-//        Human enoh = builder.createHuman("Enoh", LocalDate.of(2020, Month.DECEMBER, 3), Gender.Male, avan, kain);
 
         System.out.println(humanService.printTreeInfo());
         humanService.setParent(2,0);
